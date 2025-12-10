@@ -1,0 +1,212 @@
+/* Estilos generales */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #050816;
+  color: #f9fafb;
+}
+
+.screen-alumno {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 1rem 1rem 2rem;
+}
+
+/* Encabezado */
+.header-alumno {
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.gym-name {
+  font-size: 1.3rem;
+  margin: 0;
+  color: #e5e7eb;
+}
+
+.saludo {
+  margin: 0.2rem 0 0;
+  font-size: 0.95rem;
+  color: #9ca3af;
+}
+
+/* Tarjeta del alumno */
+.card-alumno {
+  background: radial-gradient(circle at top left, #111827, #020617);
+  border-radius: 16px;
+  padding: 1.2rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+/* Parte superior */
+.card-alumno-top {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #0ea5e9, #22c55e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatar span {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #f9fafb;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info-principal h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.info-principal p {
+  margin: 0.15rem 0;
+  font-size: 0.9rem;
+  color: #9ca3af;
+}
+
+/* Bloque XP */
+.bloque-xp {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.xp-text {
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.xp-bar {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: #111827;
+  overflow: hidden;
+}
+
+.xp-bar-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #22c55e, #0ea5e9);
+  transition: width 0.3s ease-out;
+}
+
+/* Bloque membresía */
+.bloque-membresia {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(55, 65, 81, 0.8);
+}
+
+.bloque-membresia h3 {
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+}
+
+.bloque-membresia p {
+  margin: 0.15rem 0;
+  font-size: 0.85rem;
+  color: #d1d5db;
+}
+
+.dias-restantes {
+  font-weight: 600;
+}
+
+.membresia-bar {
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: #111827;
+  overflow: hidden;
+}
+
+.membresia-bar-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #22c55e, #eab308, #ef4444);
+  transition: width 0.3s ease-out;
+}
+
+/* Estados de color se podrán ajustar más adelante via clases extra */
+.membresia-estado {
+  font-size: 0.85rem;
+}
+
+.badge-estado {
+  font-weight: 600;
+}
+/* --- BOTÓN CERRAR SESIÓN --- */
+header.header-alumno {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-logout {
+  text-decoration: none;
+  font-size: 0.8rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #f9fafb;
+  transition: 0.15s ease;
+}
+
+.btn-logout:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+
+/* RESPONSIVE: en pantallas más grandes centramos más y ampliamos */
+@media (min-width: 768px) {
+  .screen-alumno {
+    max-width: 700px;
+  }
+
+  .card-alumno {
+    padding: 1.5rem;
+  }
+
+  .card-alumno-top {
+    gap: 1.5rem;
+  }
+
+  .avatar {
+    width: 52px;
+    height: 52px;
+  }
+
+  .info-principal h2 {
+    font-size: 1.2rem;
+  }
+}

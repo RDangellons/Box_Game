@@ -1,0 +1,96 @@
+/* === LOGIN === */
+.body-login {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #0f172a, #020617 60%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #f9fafb;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 1.5rem;
+}
+
+.login-card {
+  background: rgba(15, 23, 42, 0.95);
+  border-radius: 16px;
+  padding: 1.5rem 1.75rem 2rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.login-title {
+  margin: 0;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.login-subtitle {
+  margin: 0.2rem 0 1rem;
+  font-size: 0.9rem;
+  text-align: center;
+  color: #9ca3af;
+}
+
+.login-error {
+  background: rgba(248, 113, 113, 0.12);
+  border: 1px solid rgba(248, 113, 113, 0.6);
+  color: #fecaca;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.9rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.login-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  color: #e5e7eb;
+}
+
+.login-form input {
+  margin-top: 0.25rem;
+  border-radius: 999px;
+  border: 1px solid #4b5563;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.9rem;
+  background: #020617;
+  color: #f9fafb;
+  outline: none;
+}
+
+.login-form input:focus {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 1px rgba(14, 165, 233, 0.4);
+}
+
+.btn-login {
+  margin-top: 0.5rem;
+  width: 100%;
+  border: none;
+  border-radius: 999px;
+  padding: 0.6rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: linear-gradient(90deg, #22c55e, #0ea5e9);
+  color: #020617;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-login:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
