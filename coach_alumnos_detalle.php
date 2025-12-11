@@ -15,6 +15,50 @@ if ($id <= 0) {
     exit;
 }
 
+// 1) PRIMERO: TRAER AL ALUMNO DE LA BD
+$stmt = $pdo->prepare("
+    SELECT
+      id,
+      nombre_completo,
+      alias,
+      categoria,
+      rango,
+      nivel,
+      xp_actual,
+      xp_max,
+      fuerza,
+      velocidad,
+      defensa,
+      resistencia,
+      fecha_nacimiento,
+      peso_kg,
+      estatura_cm,
+      tipo_sangre,
+      alergias,
+      padecimientos,
+      notas_medicas,
+      tipo_membresia,
+      membresia_inicio,
+      membresia_fin,
+      foto_url,
+      contacto_emergencia_nombre,
+      contacto_emergencia_parentesco,
+      contacto_emergencia_telefono,
+      contacto_emergencia_telefono2,
+      activo
+    FROM alumnos
+    WHERE id = :id
+    LIMIT 1
+");
+$stmt->execute([':id' => $id]);
+$alumno = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$alumno) {
+    header('Location: coach_alumnos.php');
+    exit;
+}
+
+
 // Procesar formulario (POST) para actualizar datos
 $mensajeOk = '';
 $mensajeError = '';
@@ -36,6 +80,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $membresia_inicio  = $_POST['membresia_inicio'] ?: null;
     $membresia_fin     = $_POST['membresia_fin'] ?: null;
     $activo            = isset($_POST['activo']) ? 1 : 0;
+        // Ficha médica
+    $fecha_nacimiento = $_POST['fecha_nacimiento'] ?: null;
+    $peso_kg          = $_POST['peso_kg'] !== '' ? (float)$_POST['peso_kg'] : null;
+    $estatura_cm      = $_POST['estatura_cm'] !== '' ? (float)$_POST['estatura_cm'] : null;
+    $tipo_sangre      = trim($_POST['tipo_sangre'] ?? '');
+    $alergias         = trim($_POST['alergias'] ?? '');
+    $padecimientos    = trim($_POST['padecimientos'] ?? '');
+    $notas_medicas    = trim($_POST['notas_medicas'] ?? '');
+
+    // Contactos de emergencia
+    $contacto_nombre      = trim($_POST['contacto_emergencia_nombre'] ?? '');
+    $contacto_parentesco  = trim($_POST['contacto_emergencia_parentesco'] ?? '');
+    $contacto_tel1        = trim($_POST['contacto_emergencia_telefono'] ?? '');
+    $contacto_tel2        = trim($_POST['contacto_emergencia_telefono2'] ?? '');
+
 
         // Procesar foto (opcional)
     $nuevaFotoUrl = $alumno['foto_url']; // por defecto dejamos la que ya tiene
@@ -85,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mensajeError = 'El nombre y alias son obligatorios.';
     } else {
         try {
-                        $stmtUpdate = $pdo->prepare("
+                         $stmtUpdate = $pdo->prepare("
                 UPDATE alumnos
                 SET
                   nombre_completo   = :nombre_completo,
@@ -99,16 +158,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   velocidad         = :velocidad,
                   defensa           = :defensa,
                   resistencia       = :resistencia,
+                  fecha_nacimiento  = :fecha_nacimiento,
+                  peso_kg           = :peso_kg,
+                  estatura_cm       = :estatura_cm,
+                  tipo_sangre       = :tipo_sangre,
+                  alergias          = :alergias,
+                  padecimientos     = :padecimientos,
+                  notas_medicas     = :notas_medicas,
                   tipo_membresia    = :tipo_membresia,
                   membresia_inicio  = :membresia_inicio,
                   membresia_fin     = :membresia_fin,
                   foto_url          = :foto_url,
+                  contacto_emergencia_nombre      = :contacto_nombre,
+                  contacto_emergencia_parentesco  = :contacto_parentesco,
+                  contacto_emergencia_telefono    = :contacto_tel1,
+                  contacto_emergencia_telefono2   = :contacto_tel2,
                   activo            = :activo
                 WHERE id = :id
                 LIMIT 1
             ");
-
-                       $stmtUpdate->execute([
+                $stmtUpdate->execute([
                 ':nombre_completo'  => $nombre_completo,
                 ':alias'            => $alias,
                 ':categoria'        => $categoria,
@@ -120,47 +189,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':velocidad'        => max(0, min(100, $velocidad)),
                 ':defensa'          => max(0, min(100, $defensa)),
                 ':resistencia'      => max(0, min(100, $resistencia)),
+                ':fecha_nacimiento' => $fecha_nacimiento,
+                ':peso_kg'          => $peso_kg,
+                ':estatura_cm'      => $estatura_cm,
+                ':tipo_sangre'      => $tipo_sangre,
+                ':alergias'         => $alergias,
+                ':padecimientos'    => $padecimientos,
+                ':notas_medicas'    => $notas_medicas,
                 ':tipo_membresia'   => $tipo_membresia,
                 ':membresia_inicio' => $membresia_inicio,
                 ':membresia_fin'    => $membresia_fin,
                 ':foto_url'         => $nuevaFotoUrl,
+                ':contacto_nombre'     => $contacto_nombre,
+                ':contacto_parentesco' => $contacto_parentesco,
+                ':contacto_tel1'       => $contacto_tel1,
+                ':contacto_tel2'       => $contacto_tel2,
                 ':activo'           => $activo,
                 ':id'               => $id,
             ]);
-
+           
             $mensajeOk = 'Datos del alumno actualizados correctamente.';
         } catch (PDOException $e) {
             $mensajeError = 'Error al guardar los cambios.';
         }
     }
+
+
+    // Traer datos del alumno
+      $stmt = $pdo->prepare("
+        SELECT
+          id,
+          nombre_completo,
+          alias,
+          categoria,
+          rango,
+          nivel,
+          xp_actual,
+          xp_max,
+          fuerza,
+          velocidad,
+          defensa,
+          resistencia,
+          fecha_nacimiento,
+          peso_kg,
+          estatura_cm,
+          tipo_sangre,
+          alergias,
+          padecimientos,
+          notas_medicas,
+          tipo_membresia,
+          membresia_inicio,
+          membresia_fin,
+          foto_url,
+          contacto_emergencia_nombre,
+          contacto_emergencia_parentesco,
+          contacto_emergencia_telefono,
+          contacto_emergencia_telefono2,
+          activo
+        FROM alumnos
+        WHERE id = :id
+        LIMIT 1
+    ");
+    $stmt->execute([':id' => $id]);
+    $alumno = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-// Traer datos del alumno
-$stmt = $pdo->prepare("
-    SELECT
-      id,
-      nombre_completo,
-      alias,
-      categoria,
-      rango,
-      nivel,
-      xp_actual,
-      xp_max,
-      fuerza,
-      velocidad,
-      defensa,
-      resistencia,
-      tipo_membresia,
-      membresia_inicio,
-      membresia_fin,
-      foto_url,
-      activo
-    FROM alumnos
-    WHERE id = :id
-    LIMIT 1
-");
-$stmt->execute([':id' => $id]);
-$alumno = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+
 
 if (!$alumno) {
     header('Location: coach_alumnos.php');
@@ -348,6 +444,7 @@ $coachNombre = isset($_SESSION['coach_nombre']) ? $_SESSION['coach_nombre'] : 'C
               </label>
             </div>
           </div>
+          
 
           <!-- Membresía -->
           <div class="alumno-card">
@@ -381,6 +478,92 @@ $coachNombre = isset($_SESSION['coach_nombre']) ? $_SESSION['coach_nombre'] : 'C
               <?php endif; ?>
             </p>
           </div>
+
+            <!-- Ficha médica y contactos de emergencia -->
+  <div class="alumno-card">
+    <h2>Ficha médica & emergencia</h2>
+
+    <div class="field-row">
+      <label>Fecha de nacimiento
+        <input type="date" name="fecha_nacimiento"
+               value="<?= htmlspecialchars($alumno['fecha_nacimiento'] ?? '') ?>">
+      </label>
+    </div>
+
+    <div class="field-row">
+      <label>Peso (kg)
+        <input type="number" step="0.1" name="peso_kg"
+               value="<?= htmlspecialchars($alumno['peso_kg'] ?? '') ?>">
+      </label>
+      <label>Estatura (cm)
+        <input type="number" step="0.1" name="estatura_cm"
+               value="<?= htmlspecialchars($alumno['estatura_cm'] ?? '') ?>">
+      </label>
+    </div>
+
+    <div class="field-row">
+      <label>Tipo de sangre
+        <select name="tipo_sangre">
+          <?php
+            $tipos = ['', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+            foreach ($tipos as $tipo) {
+                $sel = ($alumno['tipo_sangre'] === $tipo) ? 'selected' : '';
+                $label = $tipo === '' ? 'No especificado' : $tipo;
+                echo "<option value=\"".htmlspecialchars($tipo)."\" $sel>$label</option>";
+            }
+          ?>
+        </select>
+      </label>
+    </div>
+
+    <div class="field-group">
+      <label>Alergias
+        <textarea name="alergias" rows="2"><?= htmlspecialchars($alergias = $alumno['alergias'] ?? '') ?></textarea>
+      </label>
+    </div>
+
+    <div class="field-group">
+      <label>Padecimientos / antecedentes
+        <textarea name="padecimientos" rows="2"><?= htmlspecialchars($alumno['padecimientos'] ?? '') ?></textarea>
+      </label>
+    </div>
+
+    <div class="field-group">
+      <label>Notas médicas (ej. restricciones, recomendaciones)
+        <textarea name="notas_medicas" rows="2"><?= htmlspecialchars($alumno['notas_medicas'] ?? '') ?></textarea>
+      </label>
+    </div>
+
+    <hr style="border-color: rgba(31,41,55,0.8); margin: 0.5rem 0;">
+
+    <h3 style="margin:0.3rem 0 0.4rem; font-size:0.9rem;">Contacto de emergencia</h3>
+
+    <div class="field-group">
+      <label>Nombre
+        <input type="text" name="contacto_emergencia_nombre"
+               value="<?= htmlspecialchars($alumno['contacto_emergencia_nombre'] ?? '') ?>">
+      </label>
+    </div>
+
+    <div class="field-group">
+      <label>Parentesco
+        <input type="text" name="contacto_emergencia_parentesco"
+               value="<?= htmlspecialchars($alumno['contacto_emergencia_parentesco'] ?? '') ?>">
+      </label>
+    </div>
+
+    <div class="field-row">
+      <label>Teléfono 1
+        <input type="text" name="contacto_emergencia_telefono"
+               value="<?= htmlspecialchars($alumno['contacto_emergencia_telefono'] ?? '') ?>">
+      </label>
+      <label>Teléfono 2
+        <input type="text" name="contacto_emergencia_telefono2"
+               value="<?= htmlspecialchars($alumno['contacto_emergencia_telefono2'] ?? '') ?>">
+      </label>
+    </div>
+  </div>
+
 
         </section>
 
