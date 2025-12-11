@@ -173,7 +173,7 @@ $coachNombre = isset($_SESSION['coach_nombre']) ? $_SESSION['coach_nombre'] : 'C
                 </span>
               </td>
               <td>
-                <a href="coach_alumno_detalle.php?id=<?= (int)$alumno['id'] ?>" class="btn-table">
+                <a href="coach_alumnos_detalle.php?id=<?= (int)$alumno['id'] ?>" class="btn-table">
                   Ver
                 </a>
               </td>
