@@ -405,7 +405,7 @@ $coachNombre = isset($_SESSION['coach_nombre']) ? $_SESSION['coach_nombre'] : 'C
 
             <div class="field-row">
               <label>Nivel
-                <input type="number" name="nivel" min="1" max="99" value="<?= (int)$alumno['nivel'] ?>">
+                <input type="number" name="nivel" min="1" max="1000" value="<?= (int)$alumno['nivel'] ?>">
               </label>
               <label>Activo
                 <input type="checkbox" name="activo" <?= $alumno['activo'] ? 'checked' : '' ?>>
