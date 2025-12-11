@@ -25,7 +25,7 @@ $alumnoId = (int)$_SESSION['alumno_id'];
     <header class="header-alumno">
   <div class="header-left">
     <h1 class="gym-name">Box Progressive Gym</h1>
-    <p class="saludo">Hola, <span id="alumno-alias">Alumno</span> 👊</p>
+    <p class="saludo">Hola, <span id="alumno-alias">Alumno</span> 🥊</p>
   </div>
 
   <a href="logout.php" class="btn-logout">
