@@ -1,8 +1,9 @@
 
 // ALUMNO_ID viene desde alumno.php
-const API_BASE_URL =  'api';
-const alumnoId = typeof ALUMNO_ID !== 'undefined' ? ALUMNO_ID : 0;
-const API_URL = (`${API_BASE_URL}/get_alumno.php?id=${alumnoId}` , {cache:  'no-store  '})
+const API_BASE_URL = 'api';
+const alumnoId = (typeof ALUMNO_ID !== 'undefined' && ALUMNO_ID) ? ALUMNO_ID : 0;
+const API_URL = `${API_BASE_URL}/get_alumno.php?id=${encodeURIComponent(alumnoId)}`;
+
 
 // Función para calcular diferencia de días entre hoy y una fecha final
 function calcularDiasRestantes(fechaFinStr) {
@@ -153,7 +154,7 @@ setStat('stat-resistencia', 'stat-resistencia-txt', alumno.resistencia);
 
 // Llamar a la API al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
-  fetch(API_URL)
+  fetch(API_URL, { cache: 'no-store' })
     .then(res => res.json())
     .then(json => {
       if (!json.ok) {
@@ -164,7 +165,16 @@ document.addEventListener('DOMContentLoaded', () => {
       renderAlumno(json.data);
     })
     .catch(err => {
-      console.error('Error de red:', err);
-      alert('Error de conexión con el servidor.');
+      console.error('Fetch error:', err);
+
+      const box = document.getElementById('debugBox');
+      if (box) {
+        box.style.display = 'block';
+        box.textContent =
+          `Error: ${err.message}\nURL: ${API_URL}\nALUMNO_ID=${String(ALUMNO_ID)}\nhref=${window.location.href}`;
+      } else {
+        alert('Error: ' + err.message);
+      }
     });
 });
+

@@ -29,6 +29,7 @@ $alumnoId = (int)$_SESSION['alumno_id'];
     <p class="saludo">Bienvenido, <span id="alumno-alias">Alumno</span> 🥊</p>
   </div>
 
+
   <a href="logout.php" class="btn-logout">
     Cerrar sesión
   </a>
