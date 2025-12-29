@@ -1,8 +1,8 @@
 
 // ALUMNO_ID viene desde alumno.php
-const API_BASE_URL = 'http://localhost/Box_Game/api';
+const API_BASE_URL =  'api';
 const alumnoId = typeof ALUMNO_ID !== 'undefined' ? ALUMNO_ID : 0;
-const API_URL = `${API_BASE_URL}/get_alumno.php?id=${alumnoId}`;
+const API_URL = (`${API_BASE_URL}/get_alumno.php?id=${alumnoId}` , {cache:  'no-store  '})
 
 // Función para calcular diferencia de días entre hoy y una fecha final
 function calcularDiasRestantes(fechaFinStr) {

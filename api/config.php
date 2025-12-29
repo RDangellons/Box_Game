@@ -6,6 +6,16 @@ $DB_NAME = 'box_progressive';
 $DB_USER = 'root';
 $DB_PASS = ''; // en XAMPP por defecto suele estar vacío
 
+/*
+// Conexion a hostinguer
+$DB_HOST = 'localhost';
+$DB_NAME = 'u790984189_Box';
+$DB_USER = 'u790984189_Animal';
+$DB_PASS = 'Angelalonso21'; // en XAMPP por defecto suele estar vacío
+*/
+
+
+
 function getPDO() {
     global $DB_HOST, $DB_NAME, $DB_USER, $DB_PASS;
 
