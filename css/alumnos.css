@@ -163,6 +163,8 @@ body {
 .badge-estado {
   font-weight: 600;
 }
+
+
 /* --- BOTÓN CERRAR SESIÓN --- */
 header.header-alumno {
   display: flex;

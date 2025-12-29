@@ -15,8 +15,9 @@ $alumnoId = (int)$_SESSION['alumno_id'];
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Box Progressive | Alumno</title>
+  <title>The Boxing Animal | Alumno</title>
   <link rel="stylesheet" href="css/alumnos.css" />
+  <link rel="stylesheet" href="css/stats.css" />
 </head>
 <body>
 
@@ -24,8 +25,8 @@ $alumnoId = (int)$_SESSION['alumno_id'];
     <!-- ENCABEZADO -->
     <header class="header-alumno">
   <div class="header-left">
-    <h1 class="gym-name">Box Progressive Gym</h1>
-    <p class="saludo">Hola, <span id="alumno-alias">Alumno</span> 🥊</p>
+    <h1 class="gym-name">The Boxing Animal</h1>
+    <p class="saludo">Bienvenido, <span id="alumno-alias">Alumno</span> 🥊</p>
   </div>
 
   <a href="logout.php" class="btn-logout">
@@ -60,6 +61,7 @@ $alumnoId = (int)$_SESSION['alumno_id'];
         </div>
       </div>
 
+
       <!-- Bloque Membresía -->
       <div class="bloque-membresia">
         <h3>⏳ Mi membresía</h3>
@@ -77,6 +79,51 @@ $alumnoId = (int)$_SESSION['alumno_id'];
       </div>
     </section>
 
+    
+   <section class="card-stats">
+  <h3 class="card-title">📊 Mis estadísticas</h3>
+
+  <div class="stat-row">
+    <div class="stat-label">
+      <span>Fuerza</span>
+      <strong id="stat-fuerza-txt">0</strong>
+    </div>
+    <div class="stat-bar">
+      <div class="stat-bar-fill" id="stat-fuerza"></div>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-label">
+      <span>Velocidad</span>
+      <strong id="stat-velocidad-txt">0</strong>
+    </div>
+    <div class="stat-bar">
+      <div class="stat-bar-fill" id="stat-velocidad"></div>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-label">
+      <span>Defensa</span>
+      <strong id="stat-defensa-txt">0</strong>
+    </div>
+    <div class="stat-bar">
+      <div class="stat-bar-fill" id="stat-defensa"></div>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-label">
+      <span>Resistencia</span>
+      <strong id="stat-resistencia-txt">0</strong>
+    </div>
+    <div class="stat-bar">
+      <div class="stat-bar-fill" id="stat-resistencia"></div>
+    </div>
+  </div>
+</section>
+    
     <!-- LUEGO ABAJO IRÁN: STATS, MENSAJES, RETOS, ETC. -->
 
   </main>

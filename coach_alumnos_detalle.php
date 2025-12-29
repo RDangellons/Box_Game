@@ -96,6 +96,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $contacto_tel2        = trim($_POST['contacto_emergencia_telefono2'] ?? '');
 
 
+// Cambio de contraseña (opcional)
+$nuevaPassword     = trim($_POST['nueva_password'] ?? '');
+$confirmarPassword = trim($_POST['confirmar_password'] ?? '');
+$cambiarPassword   = false;
+
+if ($nuevaPassword !== '' || $confirmarPassword !== '') {
+
+    if ($nuevaPassword !== $confirmarPassword) {
+        $mensajeError = "Las contraseñas no coinciden.";
+    } elseif (strlen($nuevaPassword) < 6) {
+        $mensajeError = "La contraseña debe tener al menos 6 caracteres.";
+    } else {
+        // Marcamos que sí se debe cambiar
+        $cambiarPassword = true;
+        $passwordHasheada = password_hash($nuevaPassword, PASSWORD_DEFAULT);
+    }
+}
+
+
+
+
         // Procesar foto (opcional)
     $nuevaFotoUrl = $alumno['foto_url']; // por defecto dejamos la que ya tiene
 
@@ -213,6 +234,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mensajeError = 'Error al guardar los cambios.';
         }
     }
+
+    if ($cambiarPassword) {
+    $stmtPass = $pdo->prepare("
+        UPDATE alumnos
+        SET password_hash = :password_hash
+        WHERE id = :id
+        LIMIT 1
+    ");
+    $stmtPass->execute([
+        ':password_hash' => $passwordHasheada,
+        ':id' => $id
+    ]);
+
+    $mensajeOk .= " (Contraseña actualizada)";
+}
+
 
 
     // Traer datos del alumno
@@ -444,6 +481,28 @@ $coachNombre = isset($_SESSION['coach_nombre']) ? $_SESSION['coach_nombre'] : 'C
               </label>
             </div>
           </div>
+
+          <!-- Cambiar contraseña -->
+<div class="alumno-card">
+    <h2>Cambiar contraseña</h2>
+
+    <div class="field-group">
+      <label>Nueva contraseña
+        <input type="password" name="nueva_password" placeholder="Dejar vacío para no cambiar">
+      </label>
+    </div>
+
+    <div class="field-group">
+      <label>Confirmar contraseña
+        <input type="password" name="confirmar_password" placeholder="Repetir">
+      </label>
+    </div>
+
+    <p class="membresia-info">
+        Si dejas ambos campos vacíos, la contraseña NO se modificará.
+    </p>
+</div>
+
           
 
           <!-- Membresía -->

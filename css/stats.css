@@ -1,0 +1,47 @@
+/* === STATS ALUMNO === */
+.card-stats {
+  margin-top: 1rem;
+  background: #0b1220;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+.card-title {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  color: #e5e7eb;
+}
+
+.stat-row {
+  margin-bottom: 0.75rem;
+}
+
+.stat-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+}
+
+.stat-label strong {
+  color: #f9fafb;
+  font-size: 0.95rem;
+}
+
+.stat-bar {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.15);
+  overflow: hidden;
+}
+
+.stat-bar-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #22c55e, #0ea5e9);
+  transition: width 0.4s ease;
+}

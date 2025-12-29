@@ -50,6 +50,8 @@ function obtenerIniciales(nombreCompleto) {
 
 // Rellenar la tarjeta con datos del alumno
 function renderAlumno(alumno) {
+
+
   // Saludo
   const alias = alumno.alias || alumno.nombre_completo;
   document.getElementById('alumno-alias').textContent = alias;
@@ -88,6 +90,25 @@ function renderAlumno(alumno) {
 
   const xpBarFill = document.getElementById('xp-bar-fill');
   xpBarFill.style.width = xpPorcentaje + '%';
+
+
+
+//Stats
+function setStat(idBar, idTxt, value) {
+  const v = Math.max(0, Math.min(100, Number(value) || 0));
+  const elBar = document.getElementById(idBar);
+  const elTxt = document.getElementById(idTxt);
+
+  if (elTxt) elTxt.textContent = v;
+  if (elBar) elBar.style.width = `${v}%`;
+}
+
+// Dentro de tu renderAlumno(data):
+setStat('stat-fuerza', 'stat-fuerza-txt', alumno.fuerza);
+setStat('stat-velocidad', 'stat-velocidad-txt', alumno.velocidad);
+setStat('stat-defensa', 'stat-defensa-txt', alumno.defensa);
+setStat('stat-resistencia', 'stat-resistencia-txt', alumno.resistencia);
+
 
   // Membresía
   const tipoMembresia = alumno.tipo_membresia || '-';
